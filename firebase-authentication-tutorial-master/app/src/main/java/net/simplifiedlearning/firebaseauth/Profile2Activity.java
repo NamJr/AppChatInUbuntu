@@ -48,6 +48,7 @@ public class Profile2Activity extends AppCompatActivity {
     boolean check  = false;
     private User currentUser = null;
     private Button btnGoToUpdate;
+    private Button btnGoToChat;
     int REQUEST_CODE_IMAGE = 1;
     int RESULT_LOAD_IMAGE = 2;
     private Button btnUploadImageFromDevice;
@@ -171,6 +172,14 @@ public class Profile2Activity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+
+        btnGoToChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(Profile2Activity.this, MessageListActivity.class);
+                startActivity(intent1);
+            }
+        });
     }
 
     @Override
@@ -263,6 +272,7 @@ public class Profile2Activity extends AppCompatActivity {
         btnSaveAvatar = findViewById(R.id.buttonSaveAvatarProfile);
         btnCancelSaveAvatar = findViewById(R.id.buttonCancelSaveAvatarProfile);
         btnGoToUpdate = findViewById(R.id.btnGoToUpdate);
+        btnGoToChat = findViewById(R.id.btnGoToChat);
         imgAvatar = findViewById(R.id.imageAvatarProfile);
         btnUploadImageFromDevice = findViewById(R.id.buttonUploadFromDevice);
     }

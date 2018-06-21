@@ -3,7 +3,7 @@
     package="net.simplifiedlearning.firebaseauth">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +22,9 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".UpdateProfileActivity" />
-        <activity android:name=".Profile2Activity"></activity>
+        <activity android:name=".Profile2Activity" />
+        <activity android:name=".ListFriendActivity" />
+        <activity android:name=".MessageListActivity"></activity>
     </application>
 
 </manifest>
