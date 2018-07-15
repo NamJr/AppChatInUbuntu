@@ -14,6 +14,7 @@ public class User implements Serializable {
     private String addressUser;
 
     public User() {
+
     }
 
     public User(String idUser, String emailUser, String nicknameUser,

@@ -3,12 +3,15 @@ package net.simplifiedlearning.firebaseauth;
 public class Message {
 
     private String message;
-    private User sender;
+    private String idSender;
     private String createdAt;
 
-    public Message(String message, User sender, String createdAt) {
+    public Message() {
+    }
+
+    public Message(String message, String idSender, String createdAt) {
         this.message = message;
-        this.sender = sender;
+        this.idSender = idSender;
         this.createdAt = createdAt;
     }
 
@@ -20,12 +23,12 @@ public class Message {
         this.message = message;
     }
 
-    public User getSender() {
-        return sender;
+    public String getIdSender() {
+        return idSender;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setIdSender(String idSender) {
+        this.idSender = idSender;
     }
 
     public String getCreatedAt() {

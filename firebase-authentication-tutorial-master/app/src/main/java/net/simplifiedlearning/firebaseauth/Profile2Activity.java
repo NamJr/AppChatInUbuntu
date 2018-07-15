@@ -8,8 +8,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +26,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import net.simplifiedlearning.firebaseauth.chat_messege_of_people.TabLayoutChatActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -74,6 +74,7 @@ public class Profile2Activity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         final User user = (User) intent.getSerializableExtra("userUpdate");
+
         if (user!=null) {
             String name = user.getNicknameUser();
             String mail = user.getEmailUser();
@@ -87,6 +88,7 @@ public class Profile2Activity extends AppCompatActivity {
             tvBirthday.setText(birthday);
             tvPhone.setText(phone);
             tvAddress.setText(address);
+            if (!link.equals(""))
             Picasso.with(Profile2Activity.this).load(link).into(imgAvatar);
         }
 
@@ -169,6 +171,7 @@ public class Profile2Activity extends AppCompatActivity {
                     currentUser = user;
                 }
                 intent1.putExtra("userProfile", currentUser);
+
                 startActivity(intent1);
             }
         });
@@ -176,7 +179,11 @@ public class Profile2Activity extends AppCompatActivity {
         btnGoToChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(Profile2Activity.this, MessageListActivity.class);
+                Intent intent1 = new Intent(Profile2Activity.this, TabLayoutChatActivity.class);
+                if (currentUser==null){
+                    currentUser = user;
+                }
+                intent1.putExtra("userProfile", currentUser);
                 startActivity(intent1);
             }
         });
@@ -234,7 +241,6 @@ public class Profile2Activity extends AppCompatActivity {
                         tvAddress.setText("Unavailable");
                     if (!link.equals(""))
                         Picasso.with(Profile2Activity.this).load(link).into(imgAvatar);
- //                   Toast.makeText(Profile2Activity.this, "Found", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -259,7 +265,6 @@ public class Profile2Activity extends AppCompatActivity {
 
             }
         });
-//        Toast.makeText(Profile2Activity.this, "Not found", Toast.LENGTH_SHORT).show();
     }
 
     private void AnhXa() {

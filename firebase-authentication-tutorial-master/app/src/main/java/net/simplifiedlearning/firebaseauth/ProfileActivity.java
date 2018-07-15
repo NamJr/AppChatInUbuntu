@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,11 +29,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import net.simplifiedlearning.firebaseauth.chat_people.ChatPeopleAdapter;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -44,12 +54,19 @@ public class ProfileActivity extends AppCompatActivity {
     ProgressBar progressBar;
     String profileImageUrl;
     FirebaseAuth mAuth;
+    TextView tvTest;
+    private ArrayList<User> people;
+    private DatabaseReference mData;
+    private RecyclerView recyclerView;
+    ChatPeopleAdapter adapter;
+    RecyclerView rvTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         mAuth = FirebaseAuth.getInstance();
+        mData = FirebaseDatabase.getInstance().getReference();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,6 +75,15 @@ public class ProfileActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         textView = (TextView) findViewById(R.id.textViewVerified);
+        tvTest = findViewById(R.id.TvTest);
+        rvTest = findViewById(R.id.rvTest);
+        people = new ArrayList<>();
+        loadListUser();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ProfileActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new ChatPeopleAdapter(people,ProfileActivity.this);
+        recyclerView.setAdapter(adapter);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,6 +249,51 @@ public class ProfileActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Profile Image"), CHOOSE_IMAGE);
+    }
+
+
+    private void loadListUser() {
+
+
+        mData.child("UserProfile").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                User getUser = dataSnapshot.getValue(User.class);
+                people.add(getUser);
+//                tvTest.append(getUser.getLinkAvatarUser()+" "+getUser.getNicknameUser()+" "+getUser.getEmailUser()+"\n");
+
+//                adapter.notifyDataSetChanged();
+
+
+//                Toast.makeText(getContext(), ""+people.get(people.size()-1).getNicknameUser(), Toast.LENGTH_SHORT).show();
+
+
+                Toast.makeText(ProfileActivity.this, "" + people.size(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        Toast.makeText(ProfileActivity.this, "Success", Toast.LENGTH_SHORT).show();
     }
 
 }

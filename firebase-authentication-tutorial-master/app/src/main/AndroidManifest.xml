@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/messenger"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -24,7 +24,10 @@
         <activity android:name=".UpdateProfileActivity" />
         <activity android:name=".Profile2Activity" />
         <activity android:name=".ListFriendActivity" />
-        <activity android:name=".MessageListActivity"></activity>
+        <activity android:name=".MessageListActivity" />
+        <activity android:name=".chat_messege_of_people.TabLayoutChatActivity" />
+        <activity android:name=".chat_people.ProfileUserInPeopleActivity"></activity>
+
     </application>
 
 </manifest>

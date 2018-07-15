@@ -134,6 +134,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     String time = String.valueOf(calendar.getTimeInMillis());
                     user1 = new User(time,email,name,"",birthday,gender,phone,address);
                     mData.child("UserProfile").child(time).setValue(user1);
+                    mData.child("User").child(time).child("Chat").child("SoloChat").child("ListUsersAreSentMessages").setValue(time);
                     check = true;
                     Toast.makeText(UpdateProfileActivity.this, "Create", Toast.LENGTH_SHORT).show();
                 }
