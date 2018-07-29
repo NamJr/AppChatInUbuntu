@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    tools:context=".uis.activities.AddTaskActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="New Task"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="#298cd2"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Enter Name: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            />
+        <EditText
+            android:id="@+id/edtAddTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: "
+            android:textColor="#000"
+            />
+        <ToggleButton
+            android:layout_marginLeft="16dp"
+            android:id="@+id/btnIsDone"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:background="@drawable/toggle"
+            android:text=""
+            android:textOff=""
+            android:textOn=""
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:layout_margin="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnOK"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:background="@drawable/custom_bg_task"
+            />
+        <Button
+            android:layout_marginLeft="16dp"
+            android:id="@+id/btnCancel"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:background="@drawable/custom_bg_task"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
