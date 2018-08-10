@@ -1,6 +1,8 @@
 package net.simplifiedlearning.firebaseauth.chat_messege_of_people;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import net.simplifiedlearning.firebaseauth.R;
+import net.simplifiedlearning.firebaseauth.chat_head.ChatHeadActivity;
 
 import java.util.ArrayList;
 
@@ -48,10 +51,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
         holder.setItemClickListener(new net.simplifiedlearning.firebaseauth.ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(isLongClick)
-                    Toast.makeText(context, "Long Click: "+message.getNewestMessage(), Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(context, "Click: "+message.getNewestMessage(), Toast.LENGTH_SHORT).show();
+//                if(isLongClick) {
+//                    Intent intent = new Intent(context, ChatHeadActivity.class);
+//                    intent.putExtra("idSenderFromMessageAdapter",message.getIdSender());
+//                    intent.putExtra("idReceiverFromMessageAdapter",message.getIdReceiver());
+//                    context.startActivity(intent);
+//                }
+//                    Toast.makeText(context, "Long Click: "+message.getNewestMessage(), Toast.LENGTH_SHORT).show();
+//                else
+//                    Toast.makeText(context, "Click: "+message.getNewestMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

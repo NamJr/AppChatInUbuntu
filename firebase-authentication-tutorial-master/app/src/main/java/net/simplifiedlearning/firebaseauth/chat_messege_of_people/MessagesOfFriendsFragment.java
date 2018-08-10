@@ -42,8 +42,7 @@ public class MessagesOfFriendsFragment extends Fragment {
         // nhan id cua user hien tai ( sender)
         bundle = this.getArguments();
         currentUserId = bundle.getString("CurrentUserID");
-//        currentUserId = "1527782350919";
-        Log.e("CURRENT USER ID", "" + currentUserId);
+//        Log.e("CURRENT USER ID", "" + currentUserId);
         return rootView;
     }
 
@@ -120,6 +119,7 @@ public class MessagesOfFriendsFragment extends Fragment {
                         if (test.size() == 8) {
                             link[0] = test.get(5);
                             name[0] = test.get(6);
+
 //                            Toast.makeText(getContext(), "Link " + link[0] + "\nNickname" + name[0], Toast.LENGTH_SHORT).show();
                         }
 

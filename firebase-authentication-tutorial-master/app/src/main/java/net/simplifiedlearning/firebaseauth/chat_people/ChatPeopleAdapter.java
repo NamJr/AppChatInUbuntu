@@ -54,10 +54,10 @@ public class ChatPeopleAdapter extends RecyclerView.Adapter<PeopleViewHolder> {
         holder.setItemClickListener(new net.simplifiedlearning.firebaseauth.ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(isLongClick)
-                    Toast.makeText(context, "Long Click: "+person.getNicknameUser(), Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(context, "Click: "+person.getNicknameUser(), Toast.LENGTH_SHORT).show();
+//                if(isLongClick)
+//                    Toast.makeText(context, "Long Click: "+person.getNicknameUser(), Toast.LENGTH_SHORT).show();
+//                else
+//                    Toast.makeText(context, "Click: "+person.getNicknameUser(), Toast.LENGTH_SHORT).show();
             }
         });
     }

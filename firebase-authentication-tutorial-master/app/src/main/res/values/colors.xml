@@ -7,5 +7,8 @@
     <color name="green_teal_600">#00897B</color>
     <color name="green_teal_700">#00796B</color>
 
+    <color name="brand_red">#d51826</color>
+    <color name="white">#ffffff</color>
+
 
 </resources>

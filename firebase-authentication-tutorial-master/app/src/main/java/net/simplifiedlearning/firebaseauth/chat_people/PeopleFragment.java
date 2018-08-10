@@ -31,7 +31,7 @@ import net.simplifiedlearning.firebaseauth.User;
 
 import java.util.ArrayList;
 
-import static com.google.android.gms.internal.zzs.TAG;
+//import static com.google.android.gms.internal.zzs.TAG;
 
 public class PeopleFragment extends Fragment {
 

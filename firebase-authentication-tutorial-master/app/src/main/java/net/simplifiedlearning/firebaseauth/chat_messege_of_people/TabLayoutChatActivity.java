@@ -1,6 +1,8 @@
 package net.simplifiedlearning.firebaseauth.chat_messege_of_people;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -9,10 +11,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import net.simplifiedlearning.firebaseauth.R;
 import net.simplifiedlearning.firebaseauth.User;
@@ -46,6 +55,27 @@ public class TabLayoutChatActivity extends AppCompatActivity {
         });
 
 
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//
+//        final FirebaseUser user1 = mAuth.getCurrentUser();
+//
+//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                .setDisplayName("Nam Jr")
+//                .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
+//                .build();
+//
+//        user1.updateProfile(profileUpdates)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d("TAG", "User profile updated."+user1.getDisplayName());
+//                        }
+//                    }
+//                });
+
+
+
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         FragmentManager manager = getSupportFragmentManager();
@@ -65,7 +95,6 @@ public class TabLayoutChatActivity extends AppCompatActivity {
         viewPagerChatAdapter.addFrag(frag_out,"Messages");
         viewPagerChatAdapter.addFrag(friend,"Friends");
         viewPagerChatAdapter.addFrag(frag_in,"People");
-//        viewPager.setAdapter(adapter);
         viewPager.setAdapter(viewPagerChatAdapter);
         tabLayout.setupWithViewPager(viewPager);
 

@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import net.simplifiedlearning.firebaseauth.ItemClickListener;
 import net.simplifiedlearning.firebaseauth.MessageListActivity;
 import net.simplifiedlearning.firebaseauth.R;
+import net.simplifiedlearning.firebaseauth.chat_head.ChatHeadActivity;
 import net.simplifiedlearning.firebaseauth.chat_people.ProfileUserInPeopleActivity;
 
 public class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
@@ -21,6 +22,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder implements View.O
     private Context context;
     private String idSender = "";
     private String idReceiver = "";
+    private String linkAvatar = "";
 
     private ItemClickListener itemClickListener;
 
@@ -53,6 +55,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder implements View.O
     @Override
     public boolean onLongClick(View v) {
         itemClickListener.onClick(v,getAdapterPosition(),true);
+        Intent intent = new Intent(context,ChatHeadActivity.class);
+        intent.putExtra("idSenderFromMessageViewHolder",idSender);
+        intent.putExtra("idReceiverFromMessageViewHolder",idReceiver);
+        intent.putExtra("AvatarSender",linkAvatar);
+        context.startActivity(intent);
         return true;
     }
 
@@ -64,6 +71,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder implements View.O
         textViewNewest.setText(newest);
         idSender = idSender1;
         idReceiver = idReceiver1;
+        linkAvatar = avatar;
     }
 
 }

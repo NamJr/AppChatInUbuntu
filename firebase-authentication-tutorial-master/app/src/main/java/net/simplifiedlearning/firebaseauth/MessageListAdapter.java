@@ -50,7 +50,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         final Message message = mMessageList.get(position);
         mAuth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
-        String userId = mAuth.getCurrentUser().getDisplayName();
+        String userId = mAuth.getCurrentUser().getUid();
 
 
         if (message.getIdSender().equals(userId)) {
@@ -166,8 +166,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         SentMessageHolder(View itemView) {
             super(itemView);
-            messageText = (TextView) itemView.findViewById(R.id.text_message_body);
-            timeText = (TextView) itemView.findViewById(R.id.text_message_time);
+            messageText = itemView.findViewById(R.id.text_message_body);
+            timeText = itemView.findViewById(R.id.text_message_time);
         }
 
         void bind(Message message) {

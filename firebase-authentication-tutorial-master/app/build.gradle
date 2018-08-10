@@ -38,9 +38,12 @@ dependencies {
     testCompile 'junit:junit:4.12'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.firebase:firebase-client-android:2.4.0'
+    implementation 'com.google.firebase:firebase-messaging:10.0.1'
+    implementation 'com.txusballesteros:bubbles:1.2.1'
+    implementation 'io.github.rockerhieu:emojicon:1.4.1'
 }
-
-
 
 
 apply plugin: 'com.google.gms.google-services'

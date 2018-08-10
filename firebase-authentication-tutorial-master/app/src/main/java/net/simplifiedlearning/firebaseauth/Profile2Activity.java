@@ -1,27 +1,41 @@
 package net.simplifiedlearning.firebaseauth;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -43,7 +57,7 @@ public class Profile2Activity extends AppCompatActivity {
     private ImageView imgAvatar;
     private Button btnSaveAvatar;
     private Button btnCancelSaveAvatar;
-    private FirebaseAuth mAuth;
+//    private FirebaseAuth mAuth;
     private DatabaseReference mData;
     boolean check  = false;
     private User currentUser = null;
@@ -54,22 +68,61 @@ public class Profile2Activity extends AppCompatActivity {
     private Button btnUploadImageFromDevice;
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
+//    private String idUser = "";
+    FirebaseUser firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+
+    String currentDeviceId;
+    FirebaseDatabase database;
+    DatabaseReference usersRef;
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile2);
+//        mAuth = FirebaseAuth.getInstance();
+        mData = FirebaseDatabase.getInstance().getReference();
+//        idUser = firebaseUserUser.getUid().toString();
+
+
+        currentDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.i("kt",FirebaseInstanceId.getInstance().getToken());
+        database = FirebaseDatabase.getInstance();
+        usersRef = database.getReference("users");
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         final StorageReference storageRef = storage.getReference();
 
+        usersRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
 
-        mAuth = FirebaseAuth.getInstance();
-        mData = FirebaseDatabase.getInstance().getReference();
+                for (com.google.firebase.database.DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    //Getting the data from snapshot
+                    FirebaseUserModel firebaseUserModel = userSnapshot.getValue(FirebaseUserModel.class);
+
+                    if (firebaseUserModel.getDeviceId().equals(currentDeviceId)) {
+                        firebaseUserModel.setDeviceToken(FirebaseInstanceId.getInstance().getToken());
+//                        user.login(firebaseUserModel);
+//                        user.saveFirebaseKey(userSnapshot.getKey());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
         AnhXa();
 
-        final String email = mAuth.getCurrentUser().getEmail();
+        final String email = firebaseUserUser.getEmail();
         tvEmail.setText(email);
-
         loadData(email);
 
         final Intent intent = getIntent();
@@ -140,10 +193,40 @@ public class Profile2Activity extends AppCompatActivity {
 //                        Log.d("AAAA",downloadUrl+"");
                         String link = String.valueOf(downloadUrl).toString();
 
-                        if (user!=null)
+                        if (user!=null) {
                             mData.child("UserProfile").child(user.getIdUser()).child("linkAvatarUser").setValue(link);
-                        else
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(user.getNicknameUser())
+                                    .setPhotoUri(Uri.parse(link))
+                                    .build();
+
+                            firebaseUserUser.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("TAG", "User profile updated.");
+                                            }
+                                        }
+                                    });
+                        }else {
                             mData.child("UserProfile").child(currentUser.getIdUser()).child("linkAvatarUser").setValue(link);
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(currentUser.getNicknameUser())
+                                    .setPhotoUri(Uri.parse(link))
+                                    .build();
+
+                            firebaseUserUser.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("TAG", "User profile updated.");
+                                            }
+                                        }
+                                    });
+                        }
+
                         currentUser.setLinkAvatarUser(link);
                         btnSaveAvatar.setVisibility(View.GONE);
                         btnCancelSaveAvatar.setVisibility(View.GONE);
@@ -183,6 +266,26 @@ public class Profile2Activity extends AppCompatActivity {
                 if (currentUser==null){
                     currentUser = user;
                 }
+//                final FirebaseUserModel firebaseUserModel = new FirebaseUserModel();
+//                firebaseUserModel.setUsername(currentUser.getNicknameUser());
+//                firebaseUserModel.setDeviceId(currentDeviceId);
+//                firebaseUserModel.setDeviceToken(FirebaseInstanceId.getInstance().getToken());
+//
+//                final ProgressDialog Dialog = new ProgressDialog(Profile2Activity.this);
+//                Dialog.setMessage("Please wait..");
+//                Dialog.setCancelable(false);
+//                Dialog.show();
+//
+//                final DatabaseReference newRef = usersRef.push();
+//                newRef.setValue(firebaseUserModel, new DatabaseReference.CompletionListener() {
+//                    @Override
+//                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+//                        Dialog.dismiss();
+////                        if (user.login(firebaseUserModel)) {
+////                            Toast.makeText(Profile2Activity.this, "moveToChattingScreen()", Toast.LENGTH_SHORT).show();
+////                        }
+//                    }
+//                });
                 intent1.putExtra("userProfile", currentUser);
                 startActivity(intent1);
             }
@@ -280,5 +383,22 @@ public class Profile2Activity extends AppCompatActivity {
         btnGoToChat = findViewById(R.id.btnGoToChat);
         imgAvatar = findViewById(R.id.imageAvatarProfile);
         btnUploadImageFromDevice = findViewById(R.id.buttonUploadFromDevice);
+    }
+
+    public void showMessage(String strTitle, String strMessage) {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle(strTitle)
+                .setMessage(strMessage)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
     }
 }

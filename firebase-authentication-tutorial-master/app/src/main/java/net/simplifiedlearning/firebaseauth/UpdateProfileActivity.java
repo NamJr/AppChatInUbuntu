@@ -1,8 +1,12 @@
 package net.simplifiedlearning.firebaseauth;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,12 +14,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Calendar;
 
@@ -32,10 +41,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private ImageView imgEditBirthday;
     private ImageView imgEditPhone;
     private ImageView imgEditAddress;
-    private FirebaseAuth mAuth;
+//    private FirebaseAuth mAuth;
     private DatabaseReference mData;
     private Button btnSaveChanges;
     boolean check  = false;
+
+    private String idUser = "";
+    FirebaseUser firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference mData1;
 
 
 
@@ -43,12 +56,15 @@ public class UpdateProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
+
+
+
 
         AnhXa();
 
-        final String email = mAuth.getCurrentUser().getEmail();
+        final String email = firebaseUserUser.getEmail();
         tvEmail.setText(email);
 
         Intent intent = getIntent();
@@ -130,12 +146,29 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     Toast.makeText(UpdateProfileActivity.this, "Update", Toast.LENGTH_SHORT).show();
                     check = false;
                 }else{
+                    String id = firebaseUserUser.getUid();
                     Calendar calendar = Calendar.getInstance();
                     String time = String.valueOf(calendar.getTimeInMillis());
-                    user1 = new User(time,email,name,"",birthday,gender,phone,address);
-                    mData.child("UserProfile").child(time).setValue(user1);
-                    mData.child("User").child(time).child("Chat").child("SoloChat").child("ListUsersAreSentMessages").setValue(time);
+                    user1 = new User(id,email,name,"",birthday,gender,phone,address);
+                    mData.child("UserProfile").child(id).setValue(user1);
                     check = true;
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(name)
+                            .setPhotoUri(Uri.parse(""))
+                            .build();
+                    firebaseUserUser.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("TAG", "User profile updated.");
+                                    }
+                                }
+                            });
+
+                    createDeviceAndToken(name,id);
+
                     Toast.makeText(UpdateProfileActivity.this, "Create", Toast.LENGTH_SHORT).show();
                 }
 
@@ -145,6 +178,19 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void createDeviceAndToken(String nickName, String id) {
+        mData1 = FirebaseDatabase.getInstance().getReference();
+        String currentDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        FirebaseUserModel firebaseUserModel = new FirebaseUserModel();
+                firebaseUserModel.setUsername(nickName);
+                firebaseUserModel.setDeviceId(currentDeviceId);
+                firebaseUserModel.setDeviceToken(FirebaseInstanceId.getInstance().getToken());
+        mData1.child("users")
+                .child(id)
+                .setValue(firebaseUserModel);
 
     }
 

@@ -41,10 +41,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(isLongClick)
-                    Toast.makeText(context, "Long Click: "+friend.getNickName(), Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(context, "Click: "+friend.getNickName(), Toast.LENGTH_SHORT).show();
+//                if(isLongClick)
+//                    Toast.makeText(context, "Long Click: "+friend.getNickName(), Toast.LENGTH_SHORT).show();
+//                else
+//                    Toast.makeText(context, "Click: "+friend.getNickName(), Toast.LENGTH_SHORT).show();
             }
         });
 
