@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_4"
     tools:context=".Profile2Activity">
 
 
@@ -15,32 +14,33 @@
         android:layout_height="wrap_content"
         android:text="Tap on camera to choose profile picture"
         android:textAlignment="center"
-        android:textSize="10sp"
+        android:textSize="@dimen/_10sdp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
     <RelativeLayout
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="290dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_alignParentRight="true"
             android:id="@+id/buttonUploadFromDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_30sdp"
             android:gravity="center"
             android:background="@drawable/rounded_button_solid"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:text="Upload"
+            android:textColor="#fff"
             android:textAllCaps="false" />
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imageAvatarProfile"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/_5sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/icon_camera"
             app:civ_border_color="#FF000000"
@@ -55,7 +55,8 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-    <LinearLayout
+
+    <RelativeLayout
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -63,45 +64,50 @@
         <Button
             android:id="@+id/buttonSaveAvatarProfile"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/_20sdp"
             android:gravity="center"
             android:background="@drawable/rounded_button_solid"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp"
             android:text="Save"
+            android:textColor="#fff"
             android:visibility="gone"
             android:textAllCaps="false" />
         <Button
-            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/buttonSaveAvatarProfile"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:id="@+id/buttonCancelSaveAvatarProfile"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/_20sdp"
             android:gravity="center"
             android:background="@drawable/rounded_button_solid"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
             android:text="Cancel"
+            android:textColor="#fff"
             android:visibility="gone"
             android:textAllCaps="false" />
-    </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:orientation="vertical"
-        android:layout_margin="10dp"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:layout_margin="@dimen/_5sdp"
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/man_user"
                 />
             <TextView
-                android:layout_width="110dp"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Username:"
                 android:textStyle="bold"
@@ -109,8 +115,9 @@
                 android:layout_marginLeft="10dp"
                 />
             <TextView
+                android:layout_weight="3"
                 android:id="@+id/tvNicknameProfile"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Unavailable"
                 android:textStyle="bold"
@@ -121,16 +128,18 @@
 
         <LinearLayout
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_margin="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/gmail"
                 />
             <TextView
-                android:layout_width="110dp"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Email:"
                 android:textStyle="bold"
@@ -138,8 +147,9 @@
                 android:layout_marginLeft="10dp"
                 />
             <TextView
+                android:layout_weight="3"
                 android:id="@+id/tvEmailProfile"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Unavailable"
                 android:textStyle="bold"
@@ -149,16 +159,18 @@
         </LinearLayout>
         <LinearLayout
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_margin="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/genders"
                 />
             <TextView
-                android:layout_width="110dp"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Gender:"
                 android:textStyle="bold"
@@ -166,8 +178,9 @@
                 android:layout_marginLeft="10dp"
                 />
             <TextView
+                android:layout_weight="3"
                 android:id="@+id/tvGenderProfile"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Unavailable"
                 android:textStyle="bold"
@@ -177,16 +190,18 @@
         </LinearLayout>
         <LinearLayout
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_margin="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/agenda"
                 />
             <TextView
-                android:layout_width="110dp"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Birthday:"
                 android:textStyle="bold"
@@ -194,8 +209,9 @@
                 android:layout_marginLeft="10dp"
                 />
             <TextView
+                android:layout_weight="3"
                 android:id="@+id/tvBirthdayProfile"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Unavailable"
                 android:textStyle="bold"
@@ -205,16 +221,18 @@
         </LinearLayout>
         <LinearLayout
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_margin="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/phone"
                 />
             <TextView
-                android:layout_width="110dp"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Phone:"
                 android:textStyle="bold"
@@ -222,8 +240,9 @@
                 android:layout_marginLeft="10dp"
                 />
             <TextView
+                android:layout_weight="3"
                 android:id="@+id/tvPhoneProfile"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Unavailable"
                 android:textStyle="bold"
@@ -233,16 +252,18 @@
         </LinearLayout>
         <LinearLayout
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_margin="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/placeholder"
                 />
             <TextView
-                android:layout_width="110dp"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Address:"
                 android:textStyle="bold"
@@ -250,8 +271,9 @@
                 android:layout_marginLeft="10dp"
                 />
             <TextView
+                android:layout_weight="3"
                 android:id="@+id/tvAddressProfile"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Unavailable"
                 android:textStyle="bold"
@@ -261,25 +283,32 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:layout_gravity="center"
-        android:layout_marginBottom="5dp"
-        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:weightSum="2"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:layout_weight="1"
             android:id="@+id/btnGoToChat"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:padding="@dimen/_10sdp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_button_solid"
+            android:textColor="#fff"
             android:text="Go to chat" />
 
         <Button
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_weight="1"
             android:id="@+id/btnGoToUpdate"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
+            android:padding="@dimen/_10sdp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_button_solid"
+            android:textColor="#fff"
             android:text="Go to Update" />
     </LinearLayout>
 
